@@ -67,7 +67,7 @@ suite('Functional Tests', function() {
 });
 
 const Browser = require('zombie');
-Browser.site = 'https://fcc-qa-chai.herokuapp.com/';
+Browser.localhost('https://fcc-qa-chai.herokuapp.com/', (process.env.PORT || 3000));
 
 suite('Functional Tests with Zombie.js', function() {
     this.timeout(5000);
@@ -88,7 +88,7 @@ suite('Functional Tests with Zombie.js', function() {
         test('Submit the surname "Colombo" in the HTML form', function(done) {
             browser.fill('surname', 'Colombo').then(() => {
                 browser.pressButton('submit', () => {
-                    browser.assert.success();
+                    browser.assert.equal(res.status, 200);
                     browser.assert.text('span#name', 'Cristoforo');
                     browser.assert.text('span#surname', 'Colombo');
                     browser.assert.elements('span#dates', 1);
